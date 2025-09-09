@@ -30,6 +30,16 @@ RF03 - Sistema de Notificações: O aplicativo deve enviar notificações push a
 RF04 - Comunicação Centralizada: O aplicativo deve eliminar a necessidade de comunicação via múltiplos grupos de WhatsApp, centralizando as confirmações e informações em uma única plataforma.
 RF05 - Gestão de Passageiros: O motorista deve ser capaz de adicionar ou remover passageiros dos grupos de viagem e simular corridas para prever a rota e o tempo de percurso.
 
+## 4. Prioridades para o MVP (Minimum Viable Product)
+Com base nos problemas e funcionalidades essenciais, a primeira versão do aplicativo (MVP) deve focar em:
+1. Funcionalidade do passageiro para avisar o turno e a participação.
+2.. Sistema de notificação de lembrete para o passageiro.
+3. Funcionalidade do motorista para visualizar a lista de passageiros que confirmaram.
+4. Funcionalidade do motorista para visualizar a ordem de coleta otimizada.
+5. Funcionalidede do motorista de acreecentar e retirar passageiros.
+6. Funcionalidade do motorista de simular trajetos a partir da ordem dos alunos.
+Observações: Funcionalidades como pagamento dentro do aplicativo serão consideradas para versões futuras.
+
 ## 5. Restrições e Premissas
 5.1. Restrições
 O sistema deve ser um aplicativo móvel compatível com as plataformas Android e iOS.
