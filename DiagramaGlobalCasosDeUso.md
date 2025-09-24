@@ -1,13 +1,13 @@
 # Diagrama Global de Casos de Uso - Aplicativo Vagas Van
 
 ## Grupo 1
-| Aluno | Github |
-|-------------|-------------|
-|Gabriel Freitas dos Reis | GabrielFRails
-|Gabriel Rodrigues Silva | Gabriellrs
-|Laura Martins Vieira Gonçalves | lauramvg1821
-|Léia Santos Costa | Leia27
-|Tallya Jesus Sousa Barbosa | tallya01
+| Aluno | Github | Cargo 
+|-------------|-------------|-------------|
+|Gabriel Freitas dos Reis | GabrielFRails | Arquiteto/Tech Lead
+|Gabriel Rodrigues Silva | Gabriellrs | Backend
+|Laura Martins Vieira Gonçalves | lauramvg1821 | Frontend
+|Léia Santos Costa | Leia27 | Analista de Requisitos
+|Tallya Jesus Sousa Barbosa | tallya01 | QA/Tester
 
 ## Introdução
 Este documento apresenta o Diagrama Global de Casos de Uso para o aplicativo "Vagas Van", desenvolvido com base no Documento de Visão fornecido. O diagrama reflete as funcionalidades do MVP (produto mínimo viável) para automatizar a organização de viagens de van, incluindo confirmações de participação, notificações e otimização de rotas, conforme os requisitos levantados.
