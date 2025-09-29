@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="br.com.appvagasvan.DriverDashboardController"
+            prefHeight="600.0" prefWidth="800.0">
+
+    <center>
+        <TabPane fx:id="turnosTabPane" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Turno da Manhã">
+                    <content>
+                        <VBox spacing="10" style="-fx-padding: 10;">
+                            <Label text="Passageiros Confirmados (Manhã)">
+                                <font>
+                                    <Font name="System Bold" size="14.0" />
+                                </font>
+                            </Label>
+                            <ListView fx:id="manhaListView" />
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab text="Turno da Noite">
+                    <content>
+                        <VBox spacing="10" style="-fx-padding: 10;">
+                            <Label text="Passageiros Confirmados (Noite)">
+                                <font>
+                                    <Font name="System Bold" size="14.0" />
+                                </font>
+                            </Label>
+                            <ListView fx:id="noiteListView" />
+                        </VBox>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+
+    <right>
+        <VBox spacing="15" style="-fx-padding: 20; -fx-background-color: #f0f0f0;">
+            <Label text="Ações">
+                <font>
+                    <Font name="System Bold" size="18.0" />
+                </font>
+            </Label>
+            <Button fx:id="btnOtimizarRota" text="Visualizar Ordem de Coleta" maxWidth="Infinity" onAction="#handleOtimizarRota"/>
+            <Button fx:id="btnSimularCorrida" text="Simular Corrida" maxWidth="Infinity" onAction="#handleSimularCorrida"/>
+            <Button fx:id="btnGerenciarPassageiros" text="Gerenciar Passageiros" maxWidth="Infinity" onAction="#handleGerenciarPassageiros"/>
+            <Button fx:id="btnGerenciarTurnos" text="Gerenciar Turnos" maxWidth="Infinity" onAction="#handleGerenciarTurnos"/>
+             <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+            </padding>
+        </VBox>
+    </right>
+
+</BorderPane>
