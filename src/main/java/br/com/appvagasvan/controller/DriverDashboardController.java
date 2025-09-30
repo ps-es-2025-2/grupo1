@@ -1,5 +1,5 @@
 
-package br.com.appvagasvan;
+package br.com.appvagasvan.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

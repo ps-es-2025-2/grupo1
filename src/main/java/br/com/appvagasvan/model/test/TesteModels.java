@@ -1,3 +1,5 @@
+package br.com.appvagasvan.model.test;
+import br.com.appvagasvan.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

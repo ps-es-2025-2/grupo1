@@ -17,7 +17,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         // Carrega o arquivo FXML da tela do motorista a partir da pasta resources
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/appvagasvan/DriverDashboard.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/appvagasvan/view/DriverDashboard.fxml"));
         Parent root = loader.load();
 
         // Configura a cena principal

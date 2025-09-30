@@ -1,3 +1,4 @@
+package br.com.appvagasvan.model;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
