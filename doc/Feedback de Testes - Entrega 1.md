@@ -39,6 +39,7 @@ Os principais casos de uso previstos na documentação são:
 
 ## 3. Funcionalidades Implementadas e Relação com Casos de Uso
 
+- **Testes automatizados JUnit**: O projeto conta com testes unitários automatizados (`GerenciadorVansTest.java`) utilizando JUnit 5, que validam a lógica de criação, atualização, deleção de passageiros e turnos, além de regras de negócio do backend. Esses testes garantem que parte dos casos de uso (como manipulação de passageiros e turnos) está corretamente implementada na camada de serviço, mesmo sem integração com a interface.
 - **Visualização de passageiros confirmados (CU3)**: A tela exibe listas de passageiros para turnos manhã e noite, porém os dados são mockados e não refletem o estado real do modelo.
 - **Ações do motorista (CU4, CU5, CU6, CU7)**: Os botões para otimizar rota, simular corrida, gerenciar passageiros e turnos estão presentes, mas não possuem lógica implementada.
 - **Simulação de modelos (relacionado a CU6)**: O arquivo `TesteModels.java` permite simular a criação de passageiros, turnos, motorista e simulação de corrida, mas não integra com a interface.
@@ -51,6 +52,7 @@ Os principais casos de uso previstos na documentação são:
 - Estrutura básica das entidades principais (Motorista, Passageiro, Turno) está implementada e aderente à documentação.
 - A interface inicial do motorista está presente, com as principais ações previstas no MVP.
 - Alguns casos de uso estão parcialmente representados na interface (ex: visualização de listas), mas sem lógica real.
+- A lógica de backend para manipulação de passageiros e turnos está sendo validada por testes unitários, aumentando a confiabilidade do sistema mesmo sem integração com a interface.
 
 ---
 
