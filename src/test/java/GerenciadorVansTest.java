@@ -1,11 +1,9 @@
 
-import br.com.appvagasvan.old.model.Passageiro;
-import br.com.appvagasvan.old.model.SimulacaoCorrida;
-import br.com.appvagasvan.old.model.Turno;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import br.com.appvagasvan.old.services.GerenciadorVans;
+import br.com.appvagasvan.model.*;
+import br.com.appvagasvan.services.GerenciadorVans;
 
 import static org.junit.jupiter.api.Assertions.*;
 
