@@ -10,7 +10,10 @@
 |Tallya Jesus Sousa Barbosa | tallya01 | QA/Tester
 
 ## Organização do Repositório
-
+```
 ├── doc --> documentação do projeto em geral
-│   
+│
+|
+|
 └── README.md
+```
