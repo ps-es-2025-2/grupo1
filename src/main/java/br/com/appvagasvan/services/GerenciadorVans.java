@@ -1,6 +1,9 @@
+package br.com.appvagasvan.services;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.stream.Collectors;
+
+import br.com.appvagasvan.model.*;
 
 public class GerenciadorVans {
 

@@ -1,3 +1,4 @@
+package br.com.appvagasvan.services;
 public interface GerenciadorCRUD<T> {
     T criar(T entidade);
     java.util.List<T> buscarTodos();
