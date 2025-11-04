@@ -1,11 +1,13 @@
 @startuml
 !theme plain
-skinparam nodesep 60
-skinparam ranksep 80
+!pragma layout smetana
+left to right direction
+
+skinparam nodesep 70
+skinparam ranksep 90
 skinparam shadowing false
 skinparam backgroundColor #FEFEFE
 skinparam dpi 300
-!pragma layout smetana
 
 node "Cliente Passageiro\n(Desktop JavaFX)" as ClientePassageiro {
     [Interface JavaFX\n(View + Controller)] as ViewPassageiro
