@@ -1,0 +1,75 @@
+@startuml
+!theme plain
+skinparam nodesep 60
+skinparam ranksep 80
+skinparam shadowing false
+skinparam backgroundColor #FEFEFE
+skinparam dpi 300
+!pragma layout smetana
+
+node "Cliente Passageiro\n(Desktop JavaFX)" as ClientePassageiro {
+    [Interface JavaFX\n(View + Controller)] as ViewPassageiro
+    artifact "vagasvan-cliente.jar" as JarPassageiro
+    ViewPassageiro --> JarPassageiro
+}
+
+node "Cliente Motorista\n(Desktop JavaFX)" as ClienteMotorista {
+    [Interface JavaFX\n(View + Controller)] as ViewMotorista
+    artifact "vagasvan-cliente.jar" as JarMotorista
+    ViewMotorista --> JarMotorista
+}
+
+node "Servidor de Aplicação\n(Java Backend)" as AppServer {
+    [Backend Java\n(Spring Boot)] as Backend
+    package "Camada Domain" #lightblue {
+        [Entidades\n(Passageiro, Turno, Viagem)]
+        [Value Objects\n(Endereco, Horario)]
+        [Regras de Negócio]
+    }
+    package "Camada Application" #lightgreen {
+        [Use Cases\n(ConfirmarParticipacaoUseCase)]
+        [DTOs]
+    }
+    package "Camada Infrastructure" #lightyellow {
+        [Repositórios JPA]
+        [Serviços Externos\n(Notification, Geolocation)]
+    }
+    artifact "appvagasvan.jar" as JarServer
+    artifact "application.yml" as ConfigServer
+    Backend --> JarServer
+    Backend --> ConfigServer
+}
+
+node "Banco de Dados\n(Persistência)" as DB {
+    database "PostgreSQL\n(Agregados e Repositórios)" as Postgres
+}
+
+cloud "Firebase Cloud Messaging\n(FCM)" as FCM {
+}
+cloud "Google Maps Platform\n(Directions + Distance Matrix)" as GMaps {
+}
+
+C1 --> AppServer : HTTPS POST /confirmar\nJWT + JSON
+C2 --> AppServer : HTTPS GET /turnos
+AppServer --> DB : JDBC 5432 (VPC)
+
+AppServer --> FCM : HTTPS POST\nfcm.googleapis.com/v1/...\nBearer <token>
+AppServer --> GMaps : HTTPS GET\nmaps.googleapis.com/v1/...\nkey=AIza...
+
+cloud "AWS Cloud" {
+    node "EC2 t3.medium" as EC2
+    node "RDS PostgreSQL" as RDS
+}
+AppServer ..> EC2 : roda em
+DB ..> RDS : roda em
+
+legend bottom
+  **Fluxos**
+  ←→  HTTPS/REST (clientes ↔ backend)  
+  →   HTTPS outbound (backend → SaaS)  
+  ──  JDBC interno  
+  **Camadas DDD**  
+  <#lightblue> Domain <#lightgreen> Application <#lightyellow> Infrastructure
+end legend
+
+@enduml
