@@ -41,30 +41,54 @@ node "Banco de Dados" as DB {
     database "PostgreSQL"
 }
 
-cloud "Firebase Cloud Messaging\n(FCM)" as FCM {
-}
-cloud "Google Maps Platform\n(Directions + Distance Matrix)" as GMaps {
+cloud "Firebase Cloud Messaging\n(FCM)" as FCM
+cloud "Google Maps Platform\n(Directions + Distance Matrix)" as GMaps
+
+node "Internet\n(Pública)" as Internet {
+    [Usuários Desktop]
 }
 
-C1 --> AppServer : HTTPS POST /confirmar\nJWT + JSON
-C2 --> AppServer : HTTPS GET /turnos
-AppServer --> DB : JDBC 5432 (VPC)
-
-AppServer --> FCM : HTTPS POST\nfcm.googleapis.com/v1/...\nBearer <token>
-AppServer --> GMaps : HTTPS GET\nmaps.googleapis.com/v1/...\nkey=AIza...
-
-cloud "AWS Cloud" {
-    node "EC2 t3.medium" as EC2
-    node "RDS PostgreSQL" as RDS
+node "VPC AWS\n(Rede Privada)" as VPC {
+    node "Subnet Pública" as SubnetPub {
+        node "Load Balancer\n(ALB)" as ALB
+    }
+    node "Subnet Privada" as SubnetPriv {
+        (EC2 t3.medium) as EC2
+        (RDS PostgreSQL) as RDS
+    }
 }
+
+C1 --> ALB : HTTPS 443\nPOST /confirmar-presenca\nJWT + JSON
+C2 --> ALB : HTTPS 443\nGET /turnos-hoje\nJWT + JSON
+ALB --> EC2 : HTTP 8080\n(interno VPC)
+
+EC2 --> RDS : JDBC 5432\n(VPC apenas)
+EC2 --> FCM : HTTPS POST\nfcm.googleapis.com/v1/...\nBearer <token>
+EC2 --> GMaps : HTTPS GET\nmaps.googleapis.com/v1/...\nkey=AIza...
+
 AppServer ..> EC2 : roda em
 DB ..> RDS : roda em
 
+note right of ALB
+  **Security Groups**:
+  • 443 → ALB (público)
+  • 8080 → EC2 (apenas ALB)
+  • 5432 → RDS (apenas EC2)
+end note
+
+note bottom of VPC
+  **Políticas IAM**:
+  • EC2: Secrets Manager (API keys FCM/Google)
+  • RDS: backup automático + criptografia em repouso
+end note
+
 legend bottom
   **Fluxos**
-  ←→  HTTPS/REST (clientes ↔ backend)  
-  →   HTTPS outbound (backend → SaaS)  
-  ──  JDBC interno  
+  ←→  HTTPS/REST (clientes ↔ ALB)  
+  →   HTTP interno (ALB → EC2)  
+  ──  JDBC (EC2 → RDS)  
+  →   HTTPS outbound (EC2 → SaaS)  
+
   **Camadas DDD**  
   <#lightblue> Domain <#lightgreen> Application <#lightyellow> Infrastructure
 end legend
