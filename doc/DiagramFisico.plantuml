@@ -9,41 +9,36 @@ skinparam shadowing false
 skinparam backgroundColor #FEFEFE
 skinparam dpi 300
 
-node "Cliente Passageiro\n(Desktop JavaFX)" as ClientePassageiro {
-    [Interface JavaFX\n(View + Controller)] as ViewPassageiro
-    artifact "vagasvan-cliente.jar" as JarPassageiro
-    ViewPassageiro --> JarPassageiro
+node "Cliente Passageiro\n(Desktop JavaFX)" as C1 {
+    [JavaFX UI]
+    artifact "vagasvan-cliente.jar"
 }
-
-node "Cliente Motorista\n(Desktop JavaFX)" as ClienteMotorista {
-    [Interface JavaFX\n(View + Controller)] as ViewMotorista
-    artifact "vagasvan-cliente.jar" as JarMotorista
-    ViewMotorista --> JarMotorista
+node "Cliente Motorista\n(Desktop JavaFX)" as C2 {
+    [JavaFX UI]
+    artifact "vagasvan-cliente.jar"
 }
 
 node "Servidor de Aplicação\n(Java Backend)" as AppServer {
-    [Backend Java\n(Spring Boot)] as Backend
-    package "Camada Domain" #lightblue {
-        [Entidades\n(Passageiro, Turno, Viagem)]
-        [Value Objects\n(Endereco, Horario)]
+    [Spring Boot]
+    folder "Domain" #lightblue {
+        [Entidades]
+        [Value Objects]
         [Regras de Negócio]
     }
-    package "Camada Application" #lightgreen {
-        [Use Cases\n(ConfirmarParticipacaoUseCase)]
+    folder "Application" #lightgreen {
+        [Use Cases]
         [DTOs]
     }
-    package "Camada Infrastructure" #lightyellow {
+    folder "Infrastructure" #lightyellow {
         [Repositórios JPA]
-        [Serviços Externos\n(Notification, Geolocation)]
+        [NotificationService]
+        [GeolocationService]
     }
-    artifact "appvagasvan.jar" as JarServer
-    artifact "application.yml" as ConfigServer
-    Backend --> JarServer
-    Backend --> ConfigServer
+    artifact "appvagasvan.jar"
 }
 
-node "Banco de Dados\n(Persistência)" as DB {
-    database "PostgreSQL\n(Agregados e Repositórios)" as Postgres
+node "Banco de Dados" as DB {
+    database "PostgreSQL"
 }
 
 cloud "Firebase Cloud Messaging\n(FCM)" as FCM {
