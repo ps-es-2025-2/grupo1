@@ -193,6 +193,7 @@ public class DriverDashboardController implements Initializable {
         }
     }
 
+    // Gabriel Rodrigues essa aqui é uma tela que falta, implemente o CRUD de passeiros e também a funcionalidade de adicionar o passageiro ao turno
     @FXML
     private void handleGerenciarPassageiros(ActionEvent event) {
         System.out.println("Ação: Gerenciar Passageiros");
@@ -200,6 +201,7 @@ public class DriverDashboardController implements Initializable {
             "A tela de gerenciamento de passageiros será aberta em breve.");
     }
 
+    // Gabriel Rodrigues idem aqui, implemente a funcionalidade na view aq de gerenciar turnos
     @FXML
     private void handleGerenciarTurnos(ActionEvent event) {
         System.out.println("Ação: Gerenciar Turnos");
