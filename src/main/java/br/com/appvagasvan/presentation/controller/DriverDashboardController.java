@@ -194,6 +194,7 @@ public class DriverDashboardController implements Initializable {
     }
 
     // Gabriel Rodrigues essa aqui é uma tela que falta, implemente o CRUD de passeiros e também a funcionalidade de adicionar o passageiro ao turno
+    // exemplo de uso: main/src/main/java/br/com/appvagasvan/DataInitializer.java
     @FXML
     private void handleGerenciarPassageiros(ActionEvent event) {
         System.out.println("Ação: Gerenciar Passageiros");
