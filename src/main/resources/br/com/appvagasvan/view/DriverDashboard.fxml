@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="br.com.appvagasvan.controller.DriverDashboardController"
+            fx:controller="br.com.appvagasvan.presentation.controller.DriverDashboardController"
             prefHeight="600.0" prefWidth="800.0">
 
     <center>
