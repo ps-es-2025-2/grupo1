@@ -19,12 +19,12 @@ public class ConfirmarParticipacaoUseCase {
 
     public void execute(ConfirmarParticipacaoInput input) {
         // Buscar passageiro
-        Passageiro passageiro = passageiroRepository.findById(input.getPassageiroId())
+        Passageiro passageiro = passageiroRepository.buscarPorId(input.getPassageiroId())
             .orElseThrow(() -> new EntidadeNaoEncontradaException(
                 "Passageiro não encontrado: " + input.getPassageiroId()));
 
         // Buscar turno
-        Turno turno = turnoRepository.findById(input.getTurnoId())
+        Turno turno = turnoRepository.buscarPorId(input.getTurnoId())
             .orElseThrow(() -> new EntidadeNaoEncontradaException(
                 "Turno não encontrado: " + input.getTurnoId()));
 
@@ -33,8 +33,8 @@ public class ConfirmarParticipacaoUseCase {
         passageiro.confirmarPresenca();
 
         // Persistir mudanças
-        turnoRepository.save(turno);
-        passageiroRepository.save(passageiro);
+        turnoRepository.salvar(turno);
+        passageiroRepository.salvar(passageiro);
 
         // Eventos seriam publicados aqui em uma implementação completa
     }

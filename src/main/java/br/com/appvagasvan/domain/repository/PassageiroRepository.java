@@ -13,40 +13,40 @@ public interface PassageiroRepository {
     /**
      * Salva ou atualiza um passageiro
      */
-    Passageiro save(Passageiro passageiro);
+    Passageiro salvar(Passageiro passageiro);
     
     /**
      * Busca um passageiro por ID
      */
-    Optional<Passageiro> findById(Integer id);
+    Optional<Passageiro> buscarPorId(Integer id);
     
     /**
      * Busca todos os passageiros
      */
-    List<Passageiro> findAll();
+    List<Passageiro> buscarTodos();
     
     /**
      * Busca passageiros confirmados em um turno
      */
-    List<Passageiro> findConfirmadosByTurno(Integer turnoId);
+    List<Passageiro> buscarConfirmadosPorTurno(Integer turnoId);
     
     /**
      * Busca passageiros não confirmados em um turno
      */
-    List<Passageiro> findNaoConfirmadosByTurno(Integer turnoId);
+    List<Passageiro> buscarNaoConfirmadosPorTurno(Integer turnoId);
     
     /**
      * Deleta um passageiro
      */
-    void delete(Integer id);
+    void remover(Integer id);
     
     /**
      * Verifica se um passageiro existe
      */
-    boolean exists(Integer id);
+    boolean existe(Integer id);
     
     /**
      * Gera o próximo ID disponível
      */
-    Integer nextId();
+    Integer proximoId();
 }

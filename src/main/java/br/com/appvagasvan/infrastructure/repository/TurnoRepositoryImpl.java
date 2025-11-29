@@ -24,19 +24,19 @@ public class TurnoRepositoryImpl implements TurnoRepository {
     }
 
     @Override
-    public Turno save(Turno turno) {
+    public Turno salvar(Turno turno) {
         turnos.put(turno.getId(), turno);
         return turno;
     }
 
-    public Turno save(Turno turno, Integer motoristaId) {
+    public Turno salvar(Turno turno, Integer motoristaId) {
         turnos.put(turno.getId(), turno);
         turnoMotorista.put(turno.getId(), motoristaId);
         return turno;
     }
 
     @Override
-    public Optional<Turno> findById(Integer id) {
+    public Optional<Turno> buscarPorId(Integer id) {
         return Optional.ofNullable(turnos.get(id));
     }
 
@@ -50,23 +50,23 @@ public class TurnoRepositoryImpl implements TurnoRepository {
     }
 
     @Override
-    public List<Turno> findAll() {
+    public List<Turno> buscarTodos() {
         return new ArrayList<>(turnos.values());
     }
 
     @Override
-    public void delete(Integer id) {
+    public void remover(Integer id) {
         turnos.remove(id);
         turnoMotorista.remove(id);
     }
 
     @Override
-    public boolean exists(Integer id) {
+    public boolean existe(Integer id) {
         return turnos.containsKey(id);
     }
 
     @Override
-    public Integer nextId() {
+    public Integer proximoId() {
         return idGenerator.getAndIncrement();
     }
 }

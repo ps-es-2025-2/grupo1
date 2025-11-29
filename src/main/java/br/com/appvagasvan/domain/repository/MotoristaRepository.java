@@ -5,6 +5,6 @@ import br.com.appvagasvan.domain.motorista.Motorista;
 import java.util.Optional;
 
 public interface MotoristaRepository {
-    Motorista save(Motorista motorista);
-    Optional<Motorista> findById(Integer id);
+    Motorista salvar(Motorista motorista);
+    Optional<Motorista> buscarPorId(Integer id);
 }

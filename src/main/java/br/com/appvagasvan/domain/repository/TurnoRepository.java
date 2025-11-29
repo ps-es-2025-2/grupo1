@@ -13,12 +13,12 @@ public interface TurnoRepository {
     /**
      * Salva ou atualiza um turno
      */
-    Turno save(Turno turno);
+    Turno salvar(Turno turno);
     
     /**
      * Busca um turno por ID
      */
-    Optional<Turno> findById(Integer id);
+    Optional<Turno> buscarPorId(Integer id);
     
     /**
      * Busca todos os turnos de um motorista
@@ -28,21 +28,21 @@ public interface TurnoRepository {
     /**
      * Busca todos os turnos
      */
-    List<Turno> findAll();
+    List<Turno> buscarTodos();
     
     /**
      * Deleta um turno
      */
-    void delete(Integer id);
+    void remover(Integer id);
     
     /**
      * Verifica se um turno existe
      */
-    boolean exists(Integer id);
+    boolean existe(Integer id);
     
     /**
      * Gera o próximo ID disponível
      */
-    Integer nextId();
+    Integer proximoId();
 }
 

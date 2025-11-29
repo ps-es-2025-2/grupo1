@@ -22,30 +22,29 @@ public class VisualizarPassageirosConfirmadosUseCase {
     }
 
     public ListaPassageirosConfirmadosOutput execute(int turnoId) {
-        Turno turno = turnoRepository.findById(turnoId)
+        Turno turno = turnoRepository.buscarPorId(turnoId)
             .orElseThrow(() -> new EntidadeNaoEncontradaException(
                 "Turno não encontrado: " + turnoId));
 
         // Buscar passageiros confirmados
         List<PassageiroOutput> passageirosOutput = new ArrayList<>();
         for (Integer passageiroId : turno.getPassageirosConfirmados()) {
-            Passageiro passageiro = passageiroRepository.findById(passageiroId)
+            Passageiro passageiro = passageiroRepository.buscarPorId(passageiroId)
                 .orElse(null);
             
             if (passageiro != null) {
                 passageirosOutput.add(new PassageiroOutput(
                     passageiro.getId(),
                     passageiro.getNome(),
-                    passageiro.getEnderecoColeta().getEnderecoCompleto(),
-                    passageiro.getTelefone() == null ? "" : passageiro.getTelefone(),
-                    passageiro.isConfirmado()
+                    passageiro.getEnderecoColeta().toString(),
+                    passageiro.getTelefone()
                 ));
             }
         }
 
         return new ListaPassageirosConfirmadosOutput(
             turno.getId(),
-            turno.getNome(),
+            turno.getTipoTurno().toString(),
             passageirosOutput
         );
     }

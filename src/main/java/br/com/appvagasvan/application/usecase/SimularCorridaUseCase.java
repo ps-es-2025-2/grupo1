@@ -38,7 +38,7 @@ public class SimularCorridaUseCase {
 
     public SimulacaoCorridaOutput execute(SimularCorridaInput input) {
         // Buscar turno
-        Turno turno = turnoRepository.findById(input.getTurnoId())
+        Turno turno = turnoRepository.buscarPorId(input.getTurnoId())
             .orElseThrow(() -> new EntidadeNaoEncontradaException(
                 "Turno não encontrado: " + input.getTurnoId()));
 
@@ -52,7 +52,7 @@ public class SimularCorridaUseCase {
         // Buscar dados completos dos passageiros
         List<Passageiro> passageiros = new ArrayList<>();
         for (Integer id : confirmados) {
-            Passageiro p = passageiroRepository.findById(id)
+            Passageiro p = passageiroRepository.buscarPorId(id)
                 .orElse(null);
             if (p != null) {
                 passageiros.add(p);
@@ -71,26 +71,25 @@ public class SimularCorridaUseCase {
         Viagem viagem = Viagem.simular(viagemId, input.getTurnoId(), ordemOtimizada, distancia, tempo);
         
         // Salvar simulação
-        viagemRepository.save(viagem);
+        viagemRepository.salvar(viagem);
 
         // Montar output com passageiros na ordem otimizada
         List<PassageiroOutput> passageirosOutput = new ArrayList<>();
         for (Integer id : ordemOtimizada) {
-            Passageiro p = passageiroRepository.findById(id).orElse(null);
+            Passageiro p = passageiroRepository.buscarPorId(id).orElse(null);
             if (p != null) {
                 passageirosOutput.add(new PassageiroOutput(
                     p.getId(),
                     p.getNome(),
-                    p.getEnderecoColeta().getEnderecoCompleto(),
-                    p.getTelefone() == null ? "" : p.getTelefone(),
-                    p.isConfirmado()
+                    p.getEnderecoColeta().toString(),
+                    p.getTelefone()
                 ));
             }
         }
 
         return new SimulacaoCorridaOutput(
             turno.getId(),
-            turno.getNome(),
+            turno.getTipoTurno(),
             distancia,
             tempo,
             tempo + " min",

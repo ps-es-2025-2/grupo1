@@ -8,14 +8,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Entidade de domínio Turno - Aggregate Root
- * Representa um grupo de viagem organizado pelo motorista
- */
 public class Turno {
     private final Integer id;
     private final Motorista motorista;
-    private String nome;
+    private TipoTurno tipoTurno;
     private Horario horario;
     private Integer capacidade;
     private HorarioLembrete horarioLembrete;
@@ -23,12 +19,11 @@ public class Turno {
     private List<Integer> passageirosConfirmados;
     private List<Object> domainEvents;
 
-    // Construtor privado
-    private Turno(Integer id, Motorista motorista, String nome, Horario horario, 
+    private Turno(Integer id, Motorista motorista, TipoTurno tipoTurno, Horario horario,
                   Integer capacidade, HorarioLembrete horarioLembrete) {
         this.id = validarId(id);
         this.motorista = motorista;
-        this.nome = validarNome(nome);
+        this.tipoTurno = tipoTurno;
         this.horario = horario;
         this.capacidade = validarCapacidade(capacidade);
         this.horarioLembrete = horarioLembrete;
@@ -37,48 +32,33 @@ public class Turno {
         this.domainEvents = new ArrayList<>();
     }
 
-    // Factory method
-    public static Turno criar(Integer id, Motorista motorista, String nome, Horario horario,
+    public static Turno criar(Integer id, Motorista motorista, TipoTurno tipoTurno, Horario horario,
                               Integer capacidade, HorarioLembrete horarioLembrete) {
-        if (id == null || motorista == null || nome == null || horario == null || capacidade == null) {
-            throw new DomainException("Motorista e outros dados obrigatórios do turno não podem ser nulos");
+        if (id == null || motorista == null || tipoTurno == null || horario == null || capacidade == null) {
+            throw new DomainException("Dados obrigatórios do turno não podem ser nulos");
         }
-        
         if (horarioLembrete != null && !horarioLembrete.isAntesDe(horario)) {
             throw new DomainException("Horário de lembrete deve ser anterior ao horário do turno");
         }
-
-        Turno turno = new Turno(id, motorista, nome, horario, capacidade, horarioLembrete);
+        Turno turno = new Turno(id, motorista, tipoTurno, horario, capacidade, horarioLembrete);
         turno.domainEvents.add(new TurnoCriadoEvent(id));
         return turno;
     }
 
-    // Reconstituir do repositório
-    public static Turno reconstituir(Integer id, Motorista motorista, String nome, Horario horario,
+    public static Turno reconstituir(Integer id, Motorista motorista, TipoTurno tipoTurno, Horario horario,
                                      Integer capacidade, HorarioLembrete horarioLembrete,
                                      List<Integer> associados, List<Integer> confirmados) {
-        Turno turno = new Turno(id, motorista, nome, horario, capacidade, horarioLembrete);
+        Turno turno = new Turno(id, motorista, tipoTurno, horario, capacidade, horarioLembrete);
         turno.passageirosAssociados = new ArrayList<>(associados);
         turno.passageirosConfirmados = new ArrayList<>(confirmados);
         return turno;
     }
 
-    // Métodos de validação
     private Integer validarId(Integer id) {
         if (id <= 0) {
             throw new DomainException("ID do turno deve ser positivo");
         }
         return id;
-    }
-
-    private String validarNome(String nome) {
-        if (nome == null || nome.trim().isEmpty()) {
-            throw new DomainException("Nome do turno não pode ser vazio");
-        }
-        if (nome.length() > 50) {
-            throw new DomainException("Nome do turno não pode ter mais de 50 caracteres");
-        }
-        return nome.trim();
     }
 
     private Integer validarCapacidade(Integer capacidade) {
@@ -91,16 +71,13 @@ public class Turno {
         return capacidade;
     }
 
-    // Métodos de negócio
     public void adicionarPassageiro(Integer passageiroId) {
         if (passageiroId == null) {
             throw new DomainException("ID do passageiro não pode ser nulo");
         }
-        
         if (passageirosAssociados.contains(passageiroId)) {
             throw new PassageiroJaAssociadoException("Passageiro já está associado a este turno");
         }
-        
         passageirosAssociados.add(passageiroId);
         domainEvents.add(new PassageiroAdicionadoAoTurnoEvent(this.id, passageiroId));
     }
@@ -109,11 +86,9 @@ public class Turno {
         if (passageiroId == null) {
             throw new DomainException("ID do passageiro não pode ser nulo");
         }
-        
         if (!passageirosAssociados.contains(passageiroId)) {
             throw new PassageiroNaoAssociadoException("Passageiro não está associado a este turno");
         }
-        
         passageirosAssociados.remove(passageiroId);
         passageirosConfirmados.remove(passageiroId);
         domainEvents.add(new PassageiroRemovidoDoTurnoEvent(this.id, passageiroId));
@@ -123,21 +98,17 @@ public class Turno {
         if (passageiroId == null) {
             throw new DomainException("ID do passageiro não pode ser nulo");
         }
-        
         if (!passageirosAssociados.contains(passageiroId)) {
             throw new PassageiroNaoAssociadoException(
                 "Passageiro não está associado a este turno. Associe o passageiro antes de confirmar.");
         }
-        
         if (passageirosConfirmados.contains(passageiroId)) {
             throw new DomainException("Passageiro já está confirmado neste turno");
         }
-        
         if (passageirosConfirmados.size() >= capacidade) {
             domainEvents.add(new CapacidadeEsgotadaEvent(this.id));
             throw new CapacidadeEsgotadaException("Capacidade máxima do turno foi atingida");
         }
-        
         passageirosConfirmados.add(passageiroId);
     }
 
@@ -145,18 +116,16 @@ public class Turno {
         if (passageiroId == null) {
             throw new DomainException("ID do passageiro não pode ser nulo");
         }
-        
         if (!passageirosConfirmados.contains(passageiroId)) {
             throw new DomainException("Passageiro não está confirmado neste turno");
         }
-        
         passageirosConfirmados.remove(passageiroId);
     }
 
-    public void atualizarInformacoes(String novoNome, Horario novoHorario, 
+    public void atualizarInformacoes(TipoTurno novoTipo, Horario novoHorario,
                                      Integer novaCapacidade, HorarioLembrete novoLembrete) {
-        if (novoNome != null) {
-            this.nome = validarNome(novoNome);
+        if (novoTipo != null) {
+            this.tipoTurno = novoTipo;
         }
         if (novoHorario != null) {
             this.horario = novoHorario;
@@ -196,7 +165,6 @@ public class Turno {
         return passageirosConfirmados.contains(passageiroId);
     }
 
-    // Getters
     public Integer getId() {
         return id;
     }
@@ -205,8 +173,8 @@ public class Turno {
         return motorista;
     }
 
-    public String getNome() {
-        return nome;
+    public TipoTurno getTipoTurno() {
+        return tipoTurno;
     }
 
     public Horario getHorario() {
@@ -248,11 +216,11 @@ public class Turno {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Turno turno = (Turno) o;
-        return id == turno.id;
+        return id.equals(turno.id);
     }
 
     @Override
     public int hashCode() {
-        return Integer.hashCode(id);
+        return id.hashCode();
     }
 }

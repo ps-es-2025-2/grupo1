@@ -19,19 +19,19 @@ public class CancelarParticipacaoUseCase {
 
     public void execute(CancelarParticipacaoInput input) {
         Integer passageiroId = input.getPassageiroId();
-        Passageiro passageiro = passageiroRepository.findById(passageiroId)
+        Passageiro passageiro = passageiroRepository.buscarPorId(passageiroId)
             .orElseThrow(() -> new EntidadeNaoEncontradaException(
                 "Passageiro não encontrado: " + input.getPassageiroId()));
 
         Integer turnoId = input.getTurnoId();
-        Turno turno = turnoRepository.findById(turnoId)
+        Turno turno = turnoRepository.buscarPorId(turnoId)
             .orElseThrow(() -> new EntidadeNaoEncontradaException(
                 "Turno não encontrado: " + input.getTurnoId()));
 
         turno.cancelarConfirmacao(passageiroId);
         passageiro.cancelarPresenca();
 
-        turnoRepository.save(turno);
-        passageiroRepository.save(passageiro);
+        turnoRepository.salvar(turno);
+        passageiroRepository.salvar(passageiro);
     }
 }

@@ -12,13 +12,13 @@ public class MotoristaRepositoryImpl implements MotoristaRepository {
     private final Map<Integer, Motorista> motoristas = new HashMap<>();
 
     @Override
-    public Motorista save(Motorista motorista) {
+    public Motorista salvar(Motorista motorista) {
         motoristas.put(motorista.getId(), motorista);
         return motorista;
     }
 
     @Override
-    public Optional<Motorista> findById(Integer id) {
+    public Optional<Motorista> buscarPorId(Integer id) {
         return Optional.ofNullable(motoristas.get(id));
     }
 }
