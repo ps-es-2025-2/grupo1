@@ -13,7 +13,7 @@ public interface ViagemRepository {
     /**
      * Salva uma viagem/simulação
      */
-    Viagem save(Viagem viagem);
+    Viagem salvar(Viagem viagem);
     
     /**
      * Busca viagens por turno
