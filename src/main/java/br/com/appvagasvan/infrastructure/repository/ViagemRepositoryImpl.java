@@ -21,7 +21,7 @@ public class ViagemRepositoryImpl implements ViagemRepository {
     }
 
     @Override
-    public Viagem save(Viagem viagem) {
+    public Viagem salvar(Viagem viagem) {
         viagens.put(viagem.getId(), viagem);
         
         viagensPorTurno.computeIfAbsent(viagem.getTurnoId(), k -> new ArrayList<>())

@@ -5,14 +5,12 @@ public class PassageiroOutput {
     private final String nome;
     private final String endereco;
     private final String telefone;
-    private final boolean confirmado;
 
-    public PassageiroOutput(int id, String nome, String endereco, String telefone, boolean confirmado) {
+    public PassageiroOutput(int id, String nome, String endereco, String telefone) {
         this.id = id;
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;
-        this.confirmado = confirmado;
     }
 
     public int getId() {
@@ -29,9 +27,5 @@ public class PassageiroOutput {
 
     public String getTelefone() {
         return telefone;
-    }
-
-    public boolean isConfirmado() {
-        return confirmado;
     }
 }

@@ -17,45 +17,45 @@ public class PassageiroRepositoryImpl implements PassageiroRepository {
     }
 
     @Override
-    public Passageiro save(Passageiro passageiro) {
+    public Passageiro salvar(Passageiro passageiro) {
         passageiros.put(passageiro.getId(), passageiro);
         return passageiro;
     }
 
     @Override
-    public Optional<Passageiro> findById(Integer id) {
+    public Optional<Passageiro> buscarPorId(Integer id) {
         return Optional.ofNullable(passageiros.get(id));
     }
 
     @Override
-    public List<Passageiro> findAll() {
+    public List<Passageiro> buscarTodos() {
         return new ArrayList<>(passageiros.values());
     }
 
     @Override
-    public List<Passageiro> findConfirmadosByTurno(Integer turnoId) {
+    public List<Passageiro> buscarConfirmadosPorTurno(Integer turnoId) {
         // Esta implementação precisa de lógica adicional ou relação com TurnoRepository
         // Por simplicidade, retorna lista vazia
         return new ArrayList<>();
     }
 
     @Override
-    public List<Passageiro> findNaoConfirmadosByTurno(Integer turnoId) {
+    public List<Passageiro> buscarNaoConfirmadosPorTurno(Integer turnoId) {
         return new ArrayList<>();
     }
 
     @Override
-    public void delete(Integer id) {
+    public void remover(Integer id) {
         passageiros.remove(id);
     }
 
     @Override
-    public boolean exists(Integer id) {
+    public boolean existe(Integer id) {
         return passageiros.containsKey(id);
     }
 
     @Override
-    public Integer nextId() {
+    public Integer proximoId() {
         return idGenerator.getAndIncrement();
     }
 }

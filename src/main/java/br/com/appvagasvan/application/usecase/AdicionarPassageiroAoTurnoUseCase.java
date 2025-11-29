@@ -18,13 +18,13 @@ public class AdicionarPassageiroAoTurnoUseCase {
 
     public void execute(AdicionarPassageiroAoTurnoInput input) {
         // Verificar se passageiro existe
-        if (!passageiroRepository.exists(input.getPassageiroId())) {
+        if (!passageiroRepository.existe(input.getPassageiroId())) {
             throw new EntidadeNaoEncontradaException(
                 "Passageiro não encontrado: " + input.getPassageiroId());
         }
 
         // Buscar turno
-        Turno turno = turnoRepository.findById(input.getTurnoId())
+        Turno turno = turnoRepository.buscarPorId(input.getTurnoId())
             .orElseThrow(() -> new EntidadeNaoEncontradaException(
                 "Turno não encontrado: " + input.getTurnoId()));
 
@@ -32,6 +32,6 @@ public class AdicionarPassageiroAoTurnoUseCase {
         turno.adicionarPassageiro(input.getPassageiroId());
 
         // Persistir
-        turnoRepository.save(turno);
+        turnoRepository.salvar(turno);
     }
 }

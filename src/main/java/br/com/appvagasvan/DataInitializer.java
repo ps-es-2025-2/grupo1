@@ -8,6 +8,7 @@ import br.com.appvagasvan.domain.repository.PassageiroRepository;
 import br.com.appvagasvan.domain.repository.TurnoRepository;
 import br.com.appvagasvan.domain.turno.Horario;
 import br.com.appvagasvan.domain.turno.HorarioLembrete;
+import br.com.appvagasvan.domain.turno.TipoTurno;
 import br.com.appvagasvan.domain.turno.Turno;
 import br.com.appvagasvan.infrastructure.di.ServiceLocator;
 
@@ -24,13 +25,13 @@ public class DataInitializer {
         MotoristaRepository motoristaRepo = locator.getMotoristaRepository();
 
         Motorista motorista = Motorista.criar(1, "João da Silva");
-        motoristaRepo.save(motorista);
+        motoristaRepo.salvar(motorista);
 
         // Criar turnos
         Turno turnoManha = Turno.criar(
             1,
             motorista,
-            "Turno da Manhã",
+            TipoTurno.MANHA,
             Horario.of("08:00"),
             20,
             HorarioLembrete.of("07:30")
@@ -39,14 +40,14 @@ public class DataInitializer {
         Turno turnoNoite = Turno.criar(
             2,
             motorista,
-            "Turno da Noite",
+            TipoTurno.NOITE,
             Horario.of("18:00"),
             15,
             HorarioLembrete.of("17:30")
         );
 
-        turnoRepo.save(turnoManha);
-        turnoRepo.save(turnoNoite);
+        turnoRepo.salvar(turnoManha);
+        turnoRepo.salvar(turnoNoite);
 
         // Criar passageiros
         Passageiro p1 = criarPassageiro(1, "Laura Martins", "Rua Verde, 123", "62999887766");
@@ -55,11 +56,11 @@ public class DataInitializer {
         Passageiro p4 = criarPassageiro(4, "Gabriel Freitas", "Rua Vermelha, 135", "62966554433");
         Passageiro p5 = criarPassageiro(5, "Léia Santos", "Rua Amarela, 579", "62955443322");
 
-        passageiroRepo.save(p1);
-        passageiroRepo.save(p2);
-        passageiroRepo.save(p3);
-        passageiroRepo.save(p4);
-        passageiroRepo.save(p5);
+        passageiroRepo.salvar(p1);
+        passageiroRepo.salvar(p2);
+        passageiroRepo.salvar(p3);
+        passageiroRepo.salvar(p4);
+        passageiroRepo.salvar(p5);
 
         // Associar passageiros aos turnos
         turnoManha.adicionarPassageiro(p1.getId());
@@ -83,13 +84,13 @@ public class DataInitializer {
         p5.confirmarPresenca();
 
         // Salvar mudanças
-        turnoRepo.save(turnoManha);
-        turnoRepo.save(turnoNoite);
-        passageiroRepo.save(p1);
-        passageiroRepo.save(p2);
-        passageiroRepo.save(p3);
-        passageiroRepo.save(p4);
-        passageiroRepo.save(p5);
+        turnoRepo.salvar(turnoManha);
+        turnoRepo.salvar(turnoNoite);
+        passageiroRepo.salvar(p1);
+        passageiroRepo.salvar(p2);
+        passageiroRepo.salvar(p3);
+        passageiroRepo.salvar(p4);
+        passageiroRepo.salvar(p5);
 
         System.out.println("✓ Dados de teste inicializados com sucesso!");
         System.out.println("  - 2 turnos criados");

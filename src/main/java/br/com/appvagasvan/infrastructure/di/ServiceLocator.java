@@ -3,9 +3,14 @@ package br.com.appvagasvan.infrastructure.di;
 import br.com.appvagasvan.application.usecase.AdicionarPassageiroAoTurnoUseCase;
 import br.com.appvagasvan.application.usecase.CancelarParticipacaoUseCase;
 import br.com.appvagasvan.application.usecase.ConfirmarParticipacaoUseCase;
+import br.com.appvagasvan.application.usecase.CriarPassageiroUseCase;
 import br.com.appvagasvan.application.usecase.CriarTurnoUseCase;
+import br.com.appvagasvan.application.usecase.RemoverPassageiroUseCase;
+import br.com.appvagasvan.application.usecase.RemoverTurnoUseCase;
 import br.com.appvagasvan.application.usecase.SimularCorridaUseCase;
 import br.com.appvagasvan.application.usecase.VisualizarPassageirosConfirmadosUseCase;
+import br.com.appvagasvan.application.usecase.VisualizarPassageirosUseCase;
+import br.com.appvagasvan.application.usecase.VisualizarTurnosUseCase;
 import br.com.appvagasvan.domain.repository.MotoristaRepository;
 import br.com.appvagasvan.domain.repository.PassageiroRepository;
 import br.com.appvagasvan.domain.repository.TurnoRepository;
@@ -40,6 +45,11 @@ public class ServiceLocator {
     private final VisualizarPassageirosConfirmadosUseCase visualizarPassageirosConfirmadosUseCase;
     private final AdicionarPassageiroAoTurnoUseCase adicionarPassageiroAoTurnoUseCase;
     private final SimularCorridaUseCase simularCorridaUseCase;
+    private final CriarPassageiroUseCase criarPassageiroUseCase;
+    private final VisualizarPassageirosUseCase visualizarPassageirosUseCase;
+    private final RemoverPassageiroUseCase removerPassageiroUseCase;
+    private final VisualizarTurnosUseCase visualizarTurnosUseCase;
+    private final RemoverTurnoUseCase removerTurnoUseCase;
 
     private ServiceLocator() {
         // Inicializar repositórios
@@ -76,6 +86,12 @@ public class ServiceLocator {
         this.simularCorridaUseCase = new SimularCorridaUseCase(
             turnoRepository, passageiroRepository, viagemRepository, otimizadorRota
         );
+
+        this.criarPassageiroUseCase = new CriarPassageiroUseCase(passageiroRepository);
+        this.visualizarPassageirosUseCase = new VisualizarPassageirosUseCase(passageiroRepository);
+        this.removerPassageiroUseCase = new RemoverPassageiroUseCase(passageiroRepository);
+        this.visualizarTurnosUseCase = new VisualizarTurnosUseCase(turnoRepository);
+        this.removerTurnoUseCase = new RemoverTurnoUseCase(turnoRepository);
     }
 
     public static synchronized ServiceLocator getInstance() {
@@ -130,6 +146,26 @@ public class ServiceLocator {
 
     public SimularCorridaUseCase getSimularCorridaUseCase() {
         return simularCorridaUseCase;
+    }
+
+    public CriarPassageiroUseCase getCriarPassageiroUseCase() {
+        return criarPassageiroUseCase;
+    }
+
+    public VisualizarPassageirosUseCase getVisualizarPassageirosUseCase() {
+        return visualizarPassageirosUseCase;
+    }
+
+    public RemoverPassageiroUseCase getRemoverPassageiroUseCase() {
+        return removerPassageiroUseCase;
+    }
+
+    public VisualizarTurnosUseCase getVisualizarTurnosUseCase() {
+        return visualizarTurnosUseCase;
+    }
+
+    public RemoverTurnoUseCase getRemoverTurnoUseCase() {
+        return removerTurnoUseCase;
     }
     
     /**
