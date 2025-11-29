@@ -78,6 +78,10 @@ public class Endereco {
 
     @Override
     public String toString() {
+        // Se for um endereço "simples" (apenas o logradouro foi preenchido), retorne apenas ele.
+        if (numero.isEmpty() && complemento.isEmpty() && bairro.isEmpty() && cidade.equals("Não especificada")) {
+            return logradouro;
+        }
         return getEnderecoCompleto();
     }
 }

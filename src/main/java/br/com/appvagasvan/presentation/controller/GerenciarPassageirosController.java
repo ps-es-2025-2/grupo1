@@ -126,7 +126,7 @@ public class GerenciarPassageirosController implements Initializable {
         }
 
         try {
-            CriarPassageiroInput input = new CriarPassageiroInput(nome, telefone, endereco);
+            CriarPassageiroInput input = new CriarPassageiroInput(nome, endereco, telefone);
             criarPassageiroUseCase.execute(input);
             carregarPassageiros();
             limparCampos();
