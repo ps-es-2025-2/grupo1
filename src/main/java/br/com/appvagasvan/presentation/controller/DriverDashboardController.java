@@ -4,14 +4,21 @@ import br.com.appvagasvan.application.dto.*;
 import br.com.appvagasvan.application.usecase.SimularCorridaUseCase;
 import br.com.appvagasvan.application.usecase.VisualizarPassageirosConfirmadosUseCase;
 import br.com.appvagasvan.domain.exception.DomainException;
-
+import br.com.appvagasvan.infrastructure.di.ServiceLocator;
+import br.com.appvagasvan.presentation.controller.GerenciarPassageirosController;
+import br.com.appvagasvan.presentation.controller.GerenciarTurnosController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -195,16 +202,78 @@ public class DriverDashboardController implements Initializable {
 
     @FXML
     private void handleGerenciarPassageiros(ActionEvent event) {
-        System.out.println("Ação: Gerenciar Passageiros");
-        exibirInformacao("Em desenvolvimento", 
-            "A tela de gerenciamento de passageiros será aberta em breve.");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/appvagasvan/view/GerenciarPassageiros.fxml"));
+            
+            // Configurar factory do controller com injeção de dependências
+            loader.setControllerFactory(controllerClass -> {
+                if (controllerClass == GerenciarPassageirosController.class) {
+                    GerenciarPassageirosController controller = new GerenciarPassageirosController();
+                    
+                    // Injetar use cases via ServiceLocator
+                    ServiceLocator locator = ServiceLocator.getInstance();
+                    controller.setCriarPassageiroUseCase(locator.getCriarPassageiroUseCase());
+                    controller.setVisualizarPassageirosUseCase(locator.getVisualizarPassageirosUseCase());
+                    controller.setRemoverPassageiroUseCase(locator.getRemoverPassageiroUseCase());
+                    controller.setAdicionarPassageiroAoTurnoUseCase(locator.getAdicionarPassageiroAoTurnoUseCase());
+                    controller.setVisualizarTurnosUseCase(locator.getVisualizarTurnosUseCase());
+                    
+                    return controller;
+                }
+                try {
+                    return controllerClass.getDeclaredConstructor().newInstance();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Gerenciar Passageiros");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            exibirErro("Erro ao abrir tela", "Não foi possível carregar a tela de gerenciamento de passageiros.");
+        }
     }
 
     @FXML
     private void handleGerenciarTurnos(ActionEvent event) {
-        System.out.println("Ação: Gerenciar Turnos");
-        exibirInformacao("Em desenvolvimento",
-            "A tela de gerenciamento de turnos será aberta em breve.");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/com/appvagasvan/view/GerenciarTurnos.fxml"));
+            
+            // Configurar factory do controller com injeção de dependências
+            loader.setControllerFactory(controllerClass -> {
+                if (controllerClass == GerenciarTurnosController.class) {
+                    GerenciarTurnosController controller = new GerenciarTurnosController();
+                    
+                    // Injetar use cases via ServiceLocator
+                    ServiceLocator locator = ServiceLocator.getInstance();
+                    controller.setCriarTurnoUseCase(locator.getCriarTurnoUseCase());
+                    controller.setVisualizarTurnosUseCase(locator.getVisualizarTurnosUseCase());
+                    controller.setRemoverTurnoUseCase(locator.getRemoverTurnoUseCase());
+                    
+                    return controller;
+                }
+                try {
+                    return controllerClass.getDeclaredConstructor().newInstance();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Gerenciar Turnos");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            exibirErro("Erro ao abrir tela", "Não foi possível carregar a tela de gerenciamento de turnos.");
+        }
     }
 
     /**
@@ -239,7 +308,7 @@ public class DriverDashboardController implements Initializable {
         
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Ordem Otimizada de Coleta");
-        alert.setHeaderText("Turno: " + output.getNomeTurno());
+        alert.setHeaderText("Turno: " + output.getTipoTurno().toString());
         alert.setContentText(mensagem.toString());
         alert.showAndWait();
     }
