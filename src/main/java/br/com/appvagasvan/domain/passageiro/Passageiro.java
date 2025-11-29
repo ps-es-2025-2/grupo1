@@ -72,10 +72,13 @@ public class Passageiro {
     }
 
     private String validarTelefone(String telefone) {
-        if (telefone != null) {
+        if (telefone != null && !telefone.trim().isEmpty()) {
             String numeroLimpo = telefone.replaceAll("[^0-9]", "");
-            if (numeroLimpo.length() < 10 || numeroLimpo.length() > 11) {
-                throw new DomainException("Telefone deve ter 10 ou 11 dígitos");
+            if (numeroLimpo.length() > 0 && (numeroLimpo.length() < 10 || numeroLimpo.length() > 11)) {
+                throw new DomainException("Telefone inválido. Se fornecido, o número deve ter 10 ou 11 dígitos. Ex: (XX) XXXXX-XXXX");
+            }
+            if (numeroLimpo.isEmpty()) {
+                return null;
             }
             return numeroLimpo;
         }

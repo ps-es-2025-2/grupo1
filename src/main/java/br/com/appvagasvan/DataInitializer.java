@@ -46,8 +46,18 @@ public class DataInitializer {
             HorarioLembrete.of("17:30")
         );
 
+        Turno turnoTarde = Turno.criar(
+            3,
+            motorista,
+            TipoTurno.TARDE,
+            Horario.of("14:00"),
+            10,
+            HorarioLembrete.of("13:30")
+        );
+
         turnoRepo.salvar(turnoManha);
         turnoRepo.salvar(turnoNoite);
+        turnoRepo.salvar(turnoTarde);
 
         // Criar passageiros
         Passageiro p1 = criarPassageiro(1, "Laura Martins", "Rua Verde, 123", "62999887766");
@@ -55,12 +65,14 @@ public class DataInitializer {
         Passageiro p3 = criarPassageiro(3, "Tallya Jesus", "Rua Laranja, 789", "62977665544");
         Passageiro p4 = criarPassageiro(4, "Gabriel Freitas", "Rua Vermelha, 135", "62966554433");
         Passageiro p5 = criarPassageiro(5, "Léia Santos", "Rua Amarela, 579", "62955443322");
+        Passageiro p6 = criarPassageiro(6, "Carlos Pereira", "Rua Roxa, 321", "62944332211");
 
         passageiroRepo.salvar(p1);
         passageiroRepo.salvar(p2);
         passageiroRepo.salvar(p3);
         passageiroRepo.salvar(p4);
         passageiroRepo.salvar(p5);
+        passageiroRepo.salvar(p6);
 
         // Associar passageiros aos turnos
         turnoManha.adicionarPassageiro(p1.getId());
@@ -69,6 +81,8 @@ public class DataInitializer {
 
         turnoNoite.adicionarPassageiro(p4.getId());
         turnoNoite.adicionarPassageiro(p5.getId());
+
+        turnoTarde.adicionarPassageiro(p6.getId());
 
         // Confirmar alguns passageiros
         turnoManha.confirmarParticipacao(p1.getId());
@@ -83,18 +97,23 @@ public class DataInitializer {
         p4.confirmarPresenca();
         p5.confirmarPresenca();
 
+        turnoTarde.confirmarParticipacao(p6.getId());
+        p6.confirmarPresenca();
+
         // Salvar mudanças
         turnoRepo.salvar(turnoManha);
         turnoRepo.salvar(turnoNoite);
+        turnoRepo.salvar(turnoTarde);
         passageiroRepo.salvar(p1);
         passageiroRepo.salvar(p2);
         passageiroRepo.salvar(p3);
         passageiroRepo.salvar(p4);
         passageiroRepo.salvar(p5);
+        passageiroRepo.salvar(p6);
 
         System.out.println("✓ Dados de teste inicializados com sucesso!");
-        System.out.println("  - 2 turnos criados");
-        System.out.println("  - 5 passageiros criados");
+        System.out.println("  - 3 turnos criados");
+        System.out.println("  - 6 passageiros criados");
         System.out.println("  - Confirmações registradas");
     }
 

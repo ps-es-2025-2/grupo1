@@ -41,6 +41,18 @@
                         </VBox>
                     </content>
                 </Tab>
+                <Tab text="Turno da Tarde">
+                    <content>
+                        <VBox spacing="10" style="-fx-padding: 10;">
+                            <Label text="Passageiros Confirmados (Tarde)">
+                                <font>
+                                    <Font name="System Bold" size="14.0" />
+                                </font>
+                            </Label>
+                            <ListView fx:id="tardeListView" />
+                        </VBox>
+                    </content>
+                </Tab>
             </tabs>
         </TabPane>
     </center>
