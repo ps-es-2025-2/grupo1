@@ -21,8 +21,7 @@ public class DTOToViewModelConverter {
             dto.getId(),
             dto.getNome(),
             dto.getEndereco(),
-            dto.getTelefone(),
-            dto.isConfirmado()
+            dto.getTelefone()
         );
     }
 
@@ -41,11 +40,9 @@ public class DTOToViewModelConverter {
     public static TurnoViewModel toViewModel(TurnoOutput dto) {
         return new TurnoViewModel(
             dto.getId(),
-            dto.getNome(),
             dto.getHorario(),
-            dto.getCapacidade(),
-            dto.getVagasDisponiveis(),
-            dto.getHorarioLembrete()
+            dto.getTipoTurno(),
+            dto.getVagasDisponiveis()
         );
     }
 
@@ -55,7 +52,7 @@ public class DTOToViewModelConverter {
     public static SimulacaoViewModel toViewModel(SimulacaoCorridaOutput dto) {
         SimulacaoViewModel viewModel = new SimulacaoViewModel();
         
-        viewModel.setNomeTurno(dto.getNomeTurno());
+        viewModel.setNomeTurno(dto.getTipoTurno().toString());
         viewModel.setDistanciaKm(dto.getDistanciaKm());
         viewModel.setTempoFormatado(dto.getTempoFormatado());
         
