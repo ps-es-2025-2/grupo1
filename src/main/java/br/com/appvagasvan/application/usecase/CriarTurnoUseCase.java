@@ -21,9 +21,9 @@ public class CriarTurnoUseCase {
 
     public TurnoOutput execute(CriarTurnoInput input) {
         // Gerar novo ID
-        Integer id = turnoRepository.nextId();
+        Integer id = turnoRepository.proximoId();
 
-        Motorista motorista = motoristaRepository.findById(input.getMotoristaId())
+        Motorista motorista = motoristaRepository.buscarPorId(input.getMotoristaId())
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(
                         "Motorista com ID " + input.getMotoristaId() + " não encontrado."));
 
@@ -33,20 +33,16 @@ public class CriarTurnoUseCase {
                 : null;
 
         // Criar turno (aplica validações de domínio)
-        Turno turno = Turno.criar(id, motorista, input.getNome(), horario, input.getCapacidade(), lembrete);
+        Turno turno = Turno.criar(id, motorista, input.getTipoTurno(), horario, input.getCapacidade(), lembrete);
 
         // Persistir
-        turno = turnoRepository.save(turno);
+        turno = turnoRepository.salvar(turno);
 
         // Converter para DTO de saída
         return new TurnoOutput(
                 turno.getId(),
-                turno.getNome(),
-                turno.getHorario().getHoraFormatada(),
-                turno.getCapacidade(),
-                turno.getVagasDisponiveis(),
-                turno.getHorarioLembrete() != null ? turno.getHorarioLembrete().getHoraFormatada() : null,
-                turno.getPassageirosAssociados().size(),
-                turno.getPassageirosConfirmados().size());
+                turno.getTipoTurno(),
+                turno.getHorario(),
+                turno.getVagasDisponiveis());
     }
 }
