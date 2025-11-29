@@ -44,20 +44,15 @@ public class DriverDashboardController implements Initializable {
     private ListView<String> noiteListView;
 
     @FXML
+    private ListView<String> tardeListView;
+
+    @FXML
     private Button btnOtimizarRota;
-
-    @FXML
-    private Button btnSimularCorrida;
-
-    @FXML
-    private Button btnGerenciarPassageiros;
-
-    @FXML
-    private Button btnGerenciarTurnos;
-
+    
     // IDs dos turnos (idealmente viriam de uma configuração ou seleção)
     private static final int TURNO_MANHA_ID = 1;
     private static final int TURNO_NOITE_ID = 2;
+    private static final int TURNO_TARDE_ID = 3;
 
     /**
      * Construtor com injeção de dependências
@@ -103,6 +98,9 @@ public class DriverDashboardController implements Initializable {
             // Carregar passageiros do turno da noite
             carregarPassageirosTurno(TURNO_NOITE_ID, noiteListView);
 
+            // Carregar passageiros do turno da tarde
+            carregarPassageirosTurno(TURNO_TARDE_ID, tardeListView);
+
         } catch (DomainException e) {
             exibirErro("Erro ao carregar passageiros", e.getMessage());
         } catch (Exception e) {
@@ -145,9 +143,13 @@ public class DriverDashboardController implements Initializable {
             listView.setItems(FXCollections.observableArrayList(
                 "Laura Martins", "Gabriel Rodrigues", "Tallya Jesus"
             ));
-        } else {
+        } else if (turnoId == TURNO_NOITE_ID) {
             listView.setItems(FXCollections.observableArrayList(
                 "Gabriel Freitas", "Léia Santos"
+            ));
+        } else {
+            listView.setItems(FXCollections.observableArrayList(
+                "Carlos Pereira"
             ));
         }
     }
@@ -286,8 +288,10 @@ public class DriverDashboardController implements Initializable {
         Tab tabSelecionada = turnosTabPane.getSelectionModel().getSelectedItem();
         if (tabSelecionada.getText().contains("Manhã")) {
             return TURNO_MANHA_ID;
-        } else {
+        } else if (tabSelecionada.getText().contains("Noite")) {
             return TURNO_NOITE_ID;
+        } else {
+            return TURNO_TARDE_ID;
         }
     }
 
