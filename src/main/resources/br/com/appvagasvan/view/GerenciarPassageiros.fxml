@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.appvagasvan.presentation.controller.GerenciarPassageirosController">
+    <children>
+        <VBox layoutX="14.0" layoutY="14.0" spacing="10.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+            <children>
+                <Label text="Gerenciamento de Passageiros">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <TableView fx:id="passageirosTableView" prefHeight="200.0">
+                    <columns>
+                        <TableColumn fx:id="nomeColumn" prefWidth="250.0" text="Nome" />
+                        <TableColumn fx:id="enderecoColumn" prefWidth="450.0" text="Endereço" />
+                        <TableColumn fx:id="telefoneColumn" prefWidth="150.0" text="Telefone" />
+                    </columns>
+                </TableView>
+                <HBox spacing="10.0">
+                    <children>
+                        <Button fx:id="btnRemover" onAction="#handleRemover" text="Remover Selecionado" />
+                    </children>
+                </HBox>
+                <Label text="Dados do Passageiro">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                </Label>
+                <HBox spacing="10.0">
+                    <children>
+                        <VBox spacing="5">
+                            <Label text="Nome:" />
+                            <TextField fx:id="nomeTextField" prefWidth="250.0" promptText="Nome completo" />
+                        </VBox>
+                        <VBox spacing="5">
+                            <Label text="Endereço:" />
+                            <TextField fx:id="enderecoTextField" prefWidth="300.0" promptText="Rua, número, bairro" />
+                        </VBox>
+                        <VBox spacing="5">
+                            <Label text="Telefone:" />
+                            <TextField fx:id="telefoneTextField" prefWidth="150.0" promptText="(XX) XXXXX-XXXX" />
+                        </VBox>
+                    </children>
+                </HBox>
+                <Button fx:id="btnSalvar" onAction="#handleSalvar" text="Salvar Passageiro" />
+
+                <Label text="Adicionar Passageiro ao Turno">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="30.0" />
+                    </VBox.margin>
+                </Label>
+                <HBox alignment="BOTTOM_LEFT" spacing="10.0">
+                    <children>
+                        <VBox spacing="5">
+                            <Label text="Selecione o Turno:" />
+                            <ComboBox fx:id="turnoComboBox" prefWidth="200.0" promptText="Manhã/Noite" />
+                        </VBox>
+                        <Button fx:id="btnAdicionarAoTurno" onAction="#handleAdicionarAoTurno" text="Adicionar ao Turno" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
