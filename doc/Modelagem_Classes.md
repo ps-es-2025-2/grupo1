@@ -1,6 +1,6 @@
 # 📝 3.7. Modelagem de Classes de Projeto (DDD)
 
-Este artefato detalha a estrutura das classes do sistema, refinando as Classes de Análise (3.4) e aplicando os padrões da Arquitetura **Domain-Driven Design (DDD)**, conforme o Documento de Decisões Arquiteturais.
+Este artefato detalha a estrutura das classes do sistema.
 
 ## 1. Diagrama de Classes de Projeto (UML)
 
