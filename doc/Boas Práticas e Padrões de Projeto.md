@@ -1,5 +1,5 @@
 
-#  3.8. Boas Práticas e Padrões de Projeto (Guia de Implementação)
+#   Boas Práticas e Padrões de Projeto (Guia de Implementação)
 
 Este documento estabelece as diretrizes e os padrões obrigatórios para a implementação do projeto Vagas Van, garantindo a conformidade com a arquitetura Domain-Driven Design (DDD) adotada.
 
