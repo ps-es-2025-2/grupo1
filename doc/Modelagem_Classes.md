@@ -2,18 +2,8 @@
 
 Este artefato detalha a estrutura das classes do sistema.
 
-## 1. Diagrama de Classes de Projeto (UML)
 
-O diagrama de classes de projeto (UML) é a representação visual da estrutura de código do sistema.
-
-**Ajuste o caminho da imagem abaixo de acordo com onde você salvou o seu PNG:**
-![Diagrama UML de Classes de Projeto (DDD)](assets/diagrama_classes_projeto.png)
-
-*O código-fonte PlantUML deste diagrama (para edição) deve ser salvo em um arquivo separado: `diagrama_classes_projeto.puml`.*
-
----
-
-## 2. Detalhamento Técnico das Classes (Especificação)
+## 1. Detalhamento Técnico das Classes (Especificação)
 
 ### A. Detalhamento do Agregado `Turno` (Agreggate Root)
 
