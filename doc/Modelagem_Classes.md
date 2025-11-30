@@ -1,4 +1,4 @@
-# 📝 3.7. Modelagem de Classes de Projeto (DDD)
+# 📝 Modelagem de Classes de Projeto (DDD)
 
 Este artefato detalha a estrutura das classes do sistema.
 
