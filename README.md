@@ -8,3 +8,15 @@
 |Laura Martins Vieira Gonçalves | lauramvg1821 | Backend
 |Léia Santos Costa | Leia27 | Analista de Requisitos
 |Tallya Jesus Sousa Barbosa | tallya01 | QA/Tester
+
+## Pre requisitos
+
+- Java 21
+- Maven mais atual (v3.x)
+
+## Para rodar:
+Na raiz:
+```
+% ⁠mvn clean install ⁠ 
+% mvn clean javafx:run
+```
