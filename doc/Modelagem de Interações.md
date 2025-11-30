@@ -1,4 +1,4 @@
-## 2. Detalhamento da Máquina de Estados
+## 1. Detalhamento da Máquina de Estados
 
 A máquina de estados modela o ciclo de vida da entidade **Confirmação** (participação do Passageiro em um Turno), garantindo que as transições sejam governadas pelas Regras de Negócio (RNs).
 
@@ -12,7 +12,7 @@ A máquina de estados modela o ciclo de vida da entidade **Confirmação** (part
 | **EMBARCADO** | O motorista registrou que o passageiro foi coletado e iniciou a viagem. | **Estado Final de Sucesso.** |
 | **NAO\_CONFIRMADO** | O prazo limite para confirmação (RN2 do CU1) foi ultrapassado sem ação do passageiro. | **Estado Final de Falha.** Não é incluído na rota. |
 
-### 2.2. Tabela de Transições
+### 1.2. Tabela de Transições
 
 | Transição (Evento) | De | Para | Disparador / Condição |
 | :--- | :--- | :--- | :--- |
@@ -22,4 +22,4 @@ A máquina de estados modela o ciclo de vida da entidade **Confirmação** (part
 | **`Passageiro Cancela`** | CONFIRMADO | CANCELADO | Ação do usuário (A1 do CU1). |
 | **`Motorista Marca`** | CONFIRMADO | EMBARCADO | Ação do Motorista ao finalizar a coleta (Pós-Viagem). |
 
-<img width="1254" height="725" alt="Captura de tela 2025-11-30 142436" src="https://github.com/user-attachments/assets/970112cb-63a0-484e-a504-6511813df798" />
+<img width="1228" height="757" alt="Captura de tela 2025-11-30 142924" src="https://github.com/user-attachments/assets/43dcdd47-3557-4a57-b587-7040cc50d186" />
