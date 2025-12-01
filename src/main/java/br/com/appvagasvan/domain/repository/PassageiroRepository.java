@@ -49,4 +49,14 @@ public interface PassageiroRepository {
      * Gera o próximo ID disponível
      */
     Integer proximoId();
+
+    /**
+     * Define o próximo ID a ser gerado
+     */
+    void definirProximoId(Integer id);
+
+    /**
+     * Busca um passageiro pelo telefone
+     */
+    Optional<Passageiro> buscarPorTelefone(String telefone);
 }

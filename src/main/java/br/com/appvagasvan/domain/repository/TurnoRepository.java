@@ -44,5 +44,9 @@ public interface TurnoRepository {
      * Gera o próximo ID disponível
      */
     Integer proximoId();
-}
 
+    /**
+     * Busca o turno de um passageiro
+     */
+    Optional<Turno> buscarTurnoPorPassageiro(Integer passageiroId);
+}

@@ -23,8 +23,8 @@ public class VisualizarPassageirosUseCase {
                 .map(p -> new PassageiroOutput(
                         p.getId(),
                         p.getNome(),
-                        p.getTelefone(),
-                        p.getEnderecoColeta().toString()))
+                        p.getEnderecoColeta().toString(),
+                        p.getTelefone()))
                 .collect(Collectors.toList());
 
         return new ListaPassageirosOutput(passageiroOutputs);
