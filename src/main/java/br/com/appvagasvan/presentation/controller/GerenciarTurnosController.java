@@ -19,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,8 @@ public class GerenciarTurnosController implements Initializable {
     @FXML
     private TableColumn<TurnoViewModel, TipoTurno> tipoTurnoColumn;
     @FXML
+    private TableColumn<TurnoViewModel, Integer> passageirosColumn;
+    @FXML
     private TableColumn<TurnoViewModel, Integer> vagasColumn;
     @FXML
     private TextField horarioTextField;
@@ -44,8 +47,6 @@ public class GerenciarTurnosController implements Initializable {
     private ComboBox<TipoTurno> tipoTurnoComboBox;
     @FXML
     private TextField vagasTextField;
-    @FXML
-    private TextField motoristaIdTextField;
     @FXML
     private Button btnRemover;
     @FXML
@@ -66,6 +67,7 @@ public class GerenciarTurnosController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         horarioColumn.setCellValueFactory(new PropertyValueFactory<>("horario"));
         tipoTurnoColumn.setCellValueFactory(new PropertyValueFactory<>("tipoTurno"));
+        passageirosColumn.setCellValueFactory(new PropertyValueFactory<>("passageirosCount"));
         vagasColumn.setCellValueFactory(new PropertyValueFactory<>("vagasDisponiveis"));
         turnosTableView.setItems(turnos);
 
@@ -87,7 +89,7 @@ public class GerenciarTurnosController implements Initializable {
         try {
             ListaTurnosOutput output = visualizarTurnosUseCase.execute();
             turnos.addAll(output.getTurnos().stream()
-                    .map(t -> new TurnoViewModel(t.getId(), t.getHorario(), t.getTipoTurno(), t.getVagasDisponiveis()))
+                    .map(t -> new TurnoViewModel(t.getId(), t.getHorario(), t.getTipoTurno(), t.getVagasDisponiveis(), t.getPassageirosCount()))
                     .collect(Collectors.toList()));
         } catch (Exception e) {
             exibirErro("Erro ao carregar turnos", e.getMessage());
@@ -100,7 +102,7 @@ public class GerenciarTurnosController implements Initializable {
             Horario horario = Horario.of(horarioTextField.getText());
             TipoTurno tipoTurno = tipoTurnoComboBox.getValue();
             int vagas = Integer.parseInt(vagasTextField.getText());
-            int motoristaId = Integer.parseInt(motoristaIdTextField.getText());
+            int motoristaId = 1; // Hardcoded para o motorista padrão
 
             CriarTurnoInput input = new CriarTurnoInput(tipoTurno, horario.getHoraFormatada(), vagas, null, motoristaId);
             criarTurnoUseCase.execute(input);
@@ -108,7 +110,7 @@ public class GerenciarTurnosController implements Initializable {
             limparCampos();
 
         } catch (NumberFormatException e) {
-            exibirErro("Erro de formato", "Vagas e ID do Motorista devem ser números.");
+            exibirErro("Erro de formato", "Vagas devem ser um número.");
         } catch (DomainException e) {
             exibirErro("Erro ao salvar turno", e.getMessage());
         }
@@ -120,6 +122,18 @@ public class GerenciarTurnosController implements Initializable {
         if (selecionado == null) {
             exibirErro("Nenhum turno selecionado", "Selecione um turno na tabela para remover.");
             return;
+        }
+
+        if (selecionado.getPassageirosCount() > 0) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmar Remoção");
+            alert.setHeaderText("O turno selecionado possui passageiros associados.");
+            alert.setContentText("Tem certeza de que deseja remover este turno e todos os seus dados?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() != ButtonType.OK) {
+                return; // Cancelado pelo usuário
+            }
         }
 
         try {
@@ -136,7 +150,6 @@ public class GerenciarTurnosController implements Initializable {
         horarioTextField.clear();
         tipoTurnoComboBox.getSelectionModel().clearSelection();
         vagasTextField.clear();
-        motoristaIdTextField.clear();
         turnosTableView.getSelectionModel().clearSelection();
     }
 
@@ -147,12 +160,12 @@ public class GerenciarTurnosController implements Initializable {
         alert.setContentText(mensagem);
         alert.showAndWait();
     }
-
+    
     // Setters for DI
     public void setCriarTurnoUseCase(CriarTurnoUseCase criarTurnoUseCase) {
         this.criarTurnoUseCase = criarTurnoUseCase;
     }
-
+    
     public void setVisualizarTurnosUseCase(VisualizarTurnosUseCase visualizarTurnosUseCase) {
         this.visualizarTurnosUseCase = visualizarTurnosUseCase;
     }

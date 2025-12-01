@@ -43,6 +43,8 @@ public class CriarTurnoUseCase {
                 turno.getId(),
                 turno.getTipoTurno(),
                 turno.getHorario(),
-                turno.getVagasDisponiveis());
+                turno.getVagasDisponiveis(),
+                0 // Um turno recém-criado não tem passageiros
+        );
     }
 }

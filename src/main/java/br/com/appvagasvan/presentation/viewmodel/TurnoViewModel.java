@@ -11,12 +11,14 @@ public class TurnoViewModel {
     private final SimpleObjectProperty<Horario> horario;
     private final SimpleObjectProperty<TipoTurno> tipoTurno;
     private final SimpleIntegerProperty vagasDisponiveis;
+    private final SimpleIntegerProperty passageirosCount;
 
-    public TurnoViewModel(int id, Horario horario, TipoTurno tipoTurno, int vagasDisponiveis) {
+    public TurnoViewModel(int id, Horario horario, TipoTurno tipoTurno, int vagasDisponiveis, int passageirosCount) {
         this.id = new SimpleIntegerProperty(id);
         this.horario = new SimpleObjectProperty<>(horario);
         this.tipoTurno = new SimpleObjectProperty<>(tipoTurno);
         this.vagasDisponiveis = new SimpleIntegerProperty(vagasDisponiveis);
+        this.passageirosCount = new SimpleIntegerProperty(passageirosCount);
     }
 
     public int getId() {
@@ -33,5 +35,9 @@ public class TurnoViewModel {
 
     public int getVagasDisponiveis() {
         return vagasDisponiveis.get();
+    }
+
+    public int getPassageirosCount() {
+        return passageirosCount.get();
     }
 }

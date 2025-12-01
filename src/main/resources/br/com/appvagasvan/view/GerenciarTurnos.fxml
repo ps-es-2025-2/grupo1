@@ -25,6 +25,7 @@
                     <columns>
                         <TableColumn fx:id="horarioColumn" prefWidth="150.0" text="Horário" />
                         <TableColumn fx:id="tipoTurnoColumn" prefWidth="150.0" text="Tipo" />
+                        <TableColumn fx:id="passageirosColumn" prefWidth="100.0" text="Passageiros" />
                         <TableColumn fx:id="vagasColumn" prefWidth="100.0" text="Vagas Disp." />
                     </columns>
                 </TableView>
@@ -54,10 +55,6 @@
                         <VBox spacing="5">
                             <Label text="Vagas:" />
                             <TextField fx:id="vagasTextField" prefWidth="100.0" promptText="Nº de vagas" />
-                        </VBox>
-                         <VBox spacing="5">
-                            <Label text="Motorista ID:" />
-                            <TextField fx:id="motoristaIdTextField" prefWidth="100.0" promptText="ID do motorista" />
                         </VBox>
                     </children>
                 </HBox>

@@ -79,6 +79,10 @@ public class Turno {
             // Passageiro já está associado, não faz nada.
             return;
         }
+        if (passageirosAssociados.size() >= capacidade) {
+            domainEvents.add(new CapacidadeEsgotadaEvent(this.id));
+            throw new CapacidadeEsgotadaException("Capacidade máxima do turno foi atingida para associação de passageiros");
+        }
         passageirosAssociados.add(passageiroId);
         domainEvents.add(new PassageiroAdicionadoAoTurnoEvent(this.id, passageiroId));
     }
@@ -99,6 +103,8 @@ public class Turno {
         if (passageiroId == null) {
             throw new DomainException("ID do passageiro não pode ser nulo");
         }
+        // A capacidade para confirmação é baseada na capacidade geral, não na associação
+        // Mas a associação já deve ter garantido que o número total não excede.
         if (!passageirosAssociados.contains(passageiroId)) {
             throw new PassageiroNaoAssociadoException(
                 "Passageiro não está associado a este turno. Associe o passageiro antes de confirmar.");
@@ -109,7 +115,7 @@ public class Turno {
         }
         if (passageirosConfirmados.size() >= capacidade) {
             domainEvents.add(new CapacidadeEsgotadaEvent(this.id));
-            throw new CapacidadeEsgotadaException("Capacidade máxima do turno foi atingida");
+            throw new CapacidadeEsgotadaException("Capacidade máxima do turno foi atingida para passageiros confirmados");
         }
         passageirosConfirmados.add(passageiroId);
     }
@@ -133,9 +139,9 @@ public class Turno {
             this.horario = novoHorario;
         }
         if (novaCapacidade != null) {
-            if (novaCapacidade < passageirosConfirmados.size()) {
+            if (novaCapacidade < passageirosAssociados.size()) { // Changed to passageirosAssociados
                 throw new DomainException(
-                    "Nova capacidade não pode ser menor que o número de passageiros confirmados");
+                    "Nova capacidade não pode ser menor que o número de passageiros associados");
             }
             this.capacidade = validarCapacidade(novaCapacidade);
         }
@@ -152,11 +158,11 @@ public class Turno {
     }
 
     public boolean temVagasDisponiveis() {
-        return passageirosConfirmados.size() < capacidade;
+        return passageirosAssociados.size() < capacidade; // Changed to passageirosAssociados
     }
 
     public Integer getVagasDisponiveis() {
-        return capacidade - passageirosConfirmados.size();
+        return capacidade - passageirosAssociados.size(); // Changed to passageirosAssociados
     }
 
     public boolean isPassageiroAssociado(Integer passageiroId) {

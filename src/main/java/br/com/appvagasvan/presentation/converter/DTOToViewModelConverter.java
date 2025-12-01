@@ -42,7 +42,8 @@ public class DTOToViewModelConverter {
             dto.getId(),
             dto.getHorario(),
             dto.getTipoTurno(),
-            dto.getVagasDisponiveis()
+            dto.getVagasDisponiveis(),
+            dto.getPassageirosCount() // Assumindo que TurnoOutput tem este método
         );
     }
 

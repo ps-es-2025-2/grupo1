@@ -24,7 +24,8 @@ public class VisualizarTurnosUseCase {
                         t.getId(),
                         t.getTipoTurno(),
                         t.getHorario(),
-                        t.getVagasDisponiveis()
+                        t.getVagasDisponiveis(),
+                        t.getPassageirosAssociados().size() // Adicionando a contagem de passageiros
                 ))
                 .collect(Collectors.toList());
 
