@@ -5,6 +5,7 @@ import br.com.appvagasvan.application.usecase.CancelarParticipacaoUseCase;
 import br.com.appvagasvan.application.usecase.ConfirmarParticipacaoUseCase;
 import br.com.appvagasvan.application.usecase.CriarPassageiroUseCase;
 import br.com.appvagasvan.application.usecase.CriarTurnoUseCase;
+import br.com.appvagasvan.application.usecase.MoverPassageiroDeTurnoUseCase;
 import br.com.appvagasvan.application.usecase.RemoverPassageiroUseCase;
 import br.com.appvagasvan.application.usecase.RemoverTurnoUseCase;
 import br.com.appvagasvan.application.usecase.SimularCorridaUseCase;
@@ -30,68 +31,74 @@ public class ServiceLocator {
     private static ServiceLocator instance;
     
     // Repositórios
-    private final PassageiroRepository passageiroRepository;
-    private final TurnoRepository turnoRepository;
-    private final ViagemRepository viagemRepository;
-    private final MotoristaRepository motoristaRepository;
+    private static final PassageiroRepository passageiroRepository;
+    private static final TurnoRepository turnoRepository;
+    private static final ViagemRepository viagemRepository;
+    private static final MotoristaRepository motoristaRepository;
     
     // Domain Services
-    private final OtimizadorRota otimizadorRota;
+    private static final OtimizadorRota otimizadorRota;
     
     // Use Cases
-    private final ConfirmarParticipacaoUseCase confirmarParticipacaoUseCase;
-    private final CancelarParticipacaoUseCase cancelarParticipacaoUseCase;
-    private final CriarTurnoUseCase criarTurnoUseCase;
-    private final VisualizarPassageirosConfirmadosUseCase visualizarPassageirosConfirmadosUseCase;
-    private final AdicionarPassageiroAoTurnoUseCase adicionarPassageiroAoTurnoUseCase;
-    private final SimularCorridaUseCase simularCorridaUseCase;
-    private final CriarPassageiroUseCase criarPassageiroUseCase;
-    private final VisualizarPassageirosUseCase visualizarPassageirosUseCase;
-    private final RemoverPassageiroUseCase removerPassageiroUseCase;
-    private final VisualizarTurnosUseCase visualizarTurnosUseCase;
-    private final RemoverTurnoUseCase removerTurnoUseCase;
+    private static final ConfirmarParticipacaoUseCase confirmarParticipacaoUseCase;
+    private static final CancelarParticipacaoUseCase cancelarParticipacaoUseCase;
+    private static final CriarTurnoUseCase criarTurnoUseCase;
+    private static final VisualizarPassageirosConfirmadosUseCase visualizarPassageirosConfirmadosUseCase;
+    private static final AdicionarPassageiroAoTurnoUseCase adicionarPassageiroAoTurnoUseCase;
+    private static final SimularCorridaUseCase simularCorridaUseCase;
+    private static final CriarPassageiroUseCase criarPassageiroUseCase;
+    private static final VisualizarPassageirosUseCase visualizarPassageirosUseCase;
+    private static final RemoverPassageiroUseCase removerPassageiroUseCase;
+    private static final VisualizarTurnosUseCase visualizarTurnosUseCase;
+    private static final RemoverTurnoUseCase removerTurnoUseCase;
+    private static final MoverPassageiroDeTurnoUseCase moverPassageiroDeTurnoUseCase;
 
-    private ServiceLocator() {
+    static {
         // Inicializar repositórios
-        this.passageiroRepository = new PassageiroRepositoryImpl();
-        this.turnoRepository = new TurnoRepositoryImpl();
-        this.viagemRepository = new ViagemRepositoryImpl();
-        this.motoristaRepository = new MotoristaRepositoryImpl();
+        passageiroRepository = new PassageiroRepositoryImpl();
+        turnoRepository = new TurnoRepositoryImpl();
+        viagemRepository = new ViagemRepositoryImpl();
+        motoristaRepository = new MotoristaRepositoryImpl();
         
         // Inicializar domain services
-        this.otimizadorRota = new OtimizadorRota();
+        otimizadorRota = new OtimizadorRota();
         
         // Inicializar use cases com suas dependências
-        this.confirmarParticipacaoUseCase = new ConfirmarParticipacaoUseCase(
+        confirmarParticipacaoUseCase = new ConfirmarParticipacaoUseCase(
             passageiroRepository, turnoRepository
         );
         
-        this.cancelarParticipacaoUseCase = new CancelarParticipacaoUseCase(
+        cancelarParticipacaoUseCase = new CancelarParticipacaoUseCase(
             passageiroRepository, turnoRepository
         );
         
-        this.criarTurnoUseCase = new CriarTurnoUseCase(
+        criarTurnoUseCase = new CriarTurnoUseCase(
             turnoRepository, motoristaRepository
         );
         
-        this.visualizarPassageirosConfirmadosUseCase = 
+        visualizarPassageirosConfirmadosUseCase = 
             new VisualizarPassageirosConfirmadosUseCase(
                 turnoRepository, passageiroRepository
             );
         
-        this.adicionarPassageiroAoTurnoUseCase = new AdicionarPassageiroAoTurnoUseCase(
+        adicionarPassageiroAoTurnoUseCase = new AdicionarPassageiroAoTurnoUseCase(
             turnoRepository, passageiroRepository
         );
         
-        this.simularCorridaUseCase = new SimularCorridaUseCase(
+        simularCorridaUseCase = new SimularCorridaUseCase(
             turnoRepository, passageiroRepository, viagemRepository, otimizadorRota
         );
 
-        this.criarPassageiroUseCase = new CriarPassageiroUseCase(passageiroRepository);
-        this.visualizarPassageirosUseCase = new VisualizarPassageirosUseCase(passageiroRepository);
-        this.removerPassageiroUseCase = new RemoverPassageiroUseCase(passageiroRepository);
-        this.visualizarTurnosUseCase = new VisualizarTurnosUseCase(turnoRepository);
-        this.removerTurnoUseCase = new RemoverTurnoUseCase(turnoRepository);
+        criarPassageiroUseCase = new CriarPassageiroUseCase(passageiroRepository);
+        visualizarPassageirosUseCase = new VisualizarPassageirosUseCase(passageiroRepository);
+        removerPassageiroUseCase = new RemoverPassageiroUseCase(passageiroRepository);
+        visualizarTurnosUseCase = new VisualizarTurnosUseCase(turnoRepository);
+        removerTurnoUseCase = new RemoverTurnoUseCase(turnoRepository);
+        moverPassageiroDeTurnoUseCase = new MoverPassageiroDeTurnoUseCase(turnoRepository, passageiroRepository);
+    }
+
+    private ServiceLocator() {
+        // Construtor privado para evitar instanciação
     }
 
     public static synchronized ServiceLocator getInstance() {
@@ -166,6 +173,10 @@ public class ServiceLocator {
 
     public RemoverTurnoUseCase getRemoverTurnoUseCase() {
         return removerTurnoUseCase;
+    }
+
+    public MoverPassageiroDeTurnoUseCase getMoverPassageiroDeTurnoUseCase() {
+        return moverPassageiroDeTurnoUseCase;
     }
     
     /**

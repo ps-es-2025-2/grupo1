@@ -221,6 +221,8 @@ public class DriverDashboardController implements Initializable {
                     controller.setRemoverPassageiroUseCase(locator.getRemoverPassageiroUseCase());
                     controller.setAdicionarPassageiroAoTurnoUseCase(locator.getAdicionarPassageiroAoTurnoUseCase());
                     controller.setVisualizarTurnosUseCase(locator.getVisualizarTurnosUseCase());
+                    controller.setMoverPassageiroDeTurnoUseCase(locator.getMoverPassageiroDeTurnoUseCase());
+                    controller.setTurnoRepository(locator.getTurnoRepository());
                     
                     return controller;
                 }
@@ -235,7 +237,10 @@ public class DriverDashboardController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Gerenciar Passageiros");
             stage.setScene(new Scene(root));
-            stage.show();
+            stage.showAndWait();
+
+            // Recarregar os passageiros após fechar a tela de gerenciamento
+            carregarPassageiros();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -273,7 +278,10 @@ public class DriverDashboardController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Gerenciar Turnos");
             stage.setScene(new Scene(root));
-            stage.show();
+            stage.showAndWait();
+
+            // Recarregar os passageiros após fechar a tela de gerenciamento
+            carregarPassageiros();
 
         } catch (IOException e) {
             e.printStackTrace();

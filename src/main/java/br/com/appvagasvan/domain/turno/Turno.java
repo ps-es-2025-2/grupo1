@@ -76,7 +76,8 @@ public class Turno {
             throw new DomainException("ID do passageiro não pode ser nulo");
         }
         if (passageirosAssociados.contains(passageiroId)) {
-            throw new PassageiroJaAssociadoException("Passageiro já está associado a este turno");
+            // Passageiro já está associado, não faz nada.
+            return;
         }
         passageirosAssociados.add(passageiroId);
         domainEvents.add(new PassageiroAdicionadoAoTurnoEvent(this.id, passageiroId));
@@ -103,7 +104,8 @@ public class Turno {
                 "Passageiro não está associado a este turno. Associe o passageiro antes de confirmar.");
         }
         if (passageirosConfirmados.contains(passageiroId)) {
-            throw new DomainException("Passageiro já está confirmado neste turno");
+            // Passageiro já está confirmado, não faz nada.
+            return;
         }
         if (passageirosConfirmados.size() >= capacidade) {
             domainEvents.add(new CapacidadeEsgotadaEvent(this.id));

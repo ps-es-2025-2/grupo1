@@ -2,7 +2,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import br.com.appvagasvan.model.*;
+import br.com.appvagasvan.old.model.*;
 import br.com.appvagasvan.services.GerenciadorVans;
 
 import static org.junit.jupiter.api.Assertions.*;

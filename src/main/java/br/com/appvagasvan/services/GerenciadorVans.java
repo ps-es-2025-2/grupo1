@@ -3,7 +3,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.stream.Collectors;
 
-import br.com.appvagasvan.model.*;
+import br.com.appvagasvan.old.model.*;
 
 public class GerenciadorVans {
 

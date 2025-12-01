@@ -69,4 +69,14 @@ public class TurnoRepositoryImpl implements TurnoRepository {
     public Integer proximoId() {
         return idGenerator.getAndIncrement();
     }
+
+    @Override
+    public Optional<Turno> buscarTurnoPorPassageiro(Integer passageiroId) {
+        if (passageiroId == null) {
+            return Optional.empty();
+        }
+        return turnos.values().stream()
+                .filter(turno -> turno.getPassageirosAssociados().contains(passageiroId))
+                .findFirst();
+    }
 }

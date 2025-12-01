@@ -58,4 +58,19 @@ public class PassageiroRepositoryImpl implements PassageiroRepository {
     public Integer proximoId() {
         return idGenerator.getAndIncrement();
     }
+
+    @Override
+    public void definirProximoId(Integer id) {
+        idGenerator.set(id);
+    }
+
+    @Override
+    public Optional<Passageiro> buscarPorTelefone(String telefone) {
+        if (telefone == null || telefone.trim().isEmpty()) {
+            return Optional.empty();
+        }
+        return passageiros.values().stream()
+                .filter(p -> telefone.equals(p.getTelefone()))
+                .findFirst();
+    }
 }

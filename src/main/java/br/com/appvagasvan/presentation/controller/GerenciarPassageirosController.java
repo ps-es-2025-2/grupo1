@@ -3,6 +3,7 @@ package br.com.appvagasvan.presentation.controller;
 import br.com.appvagasvan.application.dto.*;
 import br.com.appvagasvan.application.usecase.*;
 import br.com.appvagasvan.domain.exception.DomainException;
+import br.com.appvagasvan.domain.repository.TurnoRepository;
 import br.com.appvagasvan.presentation.viewmodel.PassageiroViewModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,7 +26,8 @@ public class GerenciarPassageirosController implements Initializable {
     private RemoverPassageiroUseCase removerPassageiroUseCase;
     private AdicionarPassageiroAoTurnoUseCase adicionarPassageiroAoTurnoUseCase;
     private VisualizarTurnosUseCase visualizarTurnosUseCase;
-
+    private MoverPassageiroDeTurnoUseCase moverPassageiroDeTurnoUseCase;
+    private TurnoRepository turnoRepository;
     // FXML Components
     @FXML
     private TableView<PassageiroViewModel> passageirosTableView;
@@ -52,12 +54,14 @@ public class GerenciarPassageirosController implements Initializable {
 
     private final ObservableList<PassageiroViewModel> passageiros = FXCollections.observableArrayList();
 
-    public GerenciarPassageirosController(CriarPassageiroUseCase criarPassageiroUseCase, VisualizarPassageirosUseCase visualizarPassageirosUseCase, RemoverPassageiroUseCase removerPassageiroUseCase, AdicionarPassageiroAoTurnoUseCase adicionarPassageiroAoTurnoUseCase, VisualizarTurnosUseCase visualizarTurnosUseCase) {
+    public GerenciarPassageirosController(CriarPassageiroUseCase criarPassageiroUseCase, VisualizarPassageirosUseCase visualizarPassageirosUseCase, RemoverPassageiroUseCase removerPassageiroUseCase, AdicionarPassageiroAoTurnoUseCase adicionarPassageiroAoTurnoUseCase, VisualizarTurnosUseCase visualizarTurnosUseCase, MoverPassageiroDeTurnoUseCase moverPassageiroDeTurnoUseCase, TurnoRepository turnoRepository) {
         this.criarPassageiroUseCase = criarPassageiroUseCase;
         this.visualizarPassageirosUseCase = visualizarPassageirosUseCase;
         this.removerPassageiroUseCase = removerPassageiroUseCase;
         this.adicionarPassageiroAoTurnoUseCase = adicionarPassageiroAoTurnoUseCase;
         this.visualizarTurnosUseCase = visualizarTurnosUseCase;
+        this.moverPassageiroDeTurnoUseCase = moverPassageiroDeTurnoUseCase;
+        this.turnoRepository = turnoRepository;
     }
 
     public GerenciarPassageirosController() {
@@ -86,10 +90,9 @@ public class GerenciarPassageirosController implements Initializable {
         passageiros.clear();
         try {
             ListaPassageirosOutput output = visualizarPassageirosUseCase.execute();
-            passageiros.addAll(output.getPassageiros().stream()
-                    .map(p -> new PassageiroViewModel(p.getId(), p.getNome(), p.getEndereco(), p.getTelefone()))
-                    .collect(Collectors.toList()));
-        } catch (Exception e) {
+                            passageiros.addAll(output.getPassageiros().stream()
+                                    .map(p -> new PassageiroViewModel(p.getId(), p.getNome(), p.getEndereco(), p.getTelefone()))
+                                    .collect(Collectors.toList()));        } catch (Exception e) {
             exibirErro("Erro ao carregar passageiros", e.getMessage());
         }
     }
@@ -164,9 +167,20 @@ public class GerenciarPassageirosController implements Initializable {
         }
 
         try {
-            AdicionarPassageiroAoTurnoInput input = new AdicionarPassageiroAoTurnoInput(turnoSelecionado.getId(), passageiroSelecionado.getId());
-            adicionarPassageiroAoTurnoUseCase.execute(input);
-            exibirInformacao("Sucesso", "Passageiro adicionado ao turno com sucesso!");
+            turnoRepository.buscarTurnoPorPassageiro(passageiroSelecionado.getId())
+                    .ifPresentOrElse(turnoAntigo -> {
+                        if (turnoAntigo.getId().equals(turnoSelecionado.getId())) {
+                            exibirInformacao("Informação", "Passageiro já está neste turno.");
+                        } else {
+                            MoverPassageiroDeTurnoInput input = new MoverPassageiroDeTurnoInput(passageiroSelecionado.getId(), turnoAntigo.getId(), turnoSelecionado.getId());
+                            moverPassageiroDeTurnoUseCase.execute(input);
+                            exibirInformacao("Sucesso", "Passageiro movido para o turno " + turnoSelecionado.getTipoTurno() + " com sucesso!");
+                        }
+                    }, () -> {
+                        AdicionarPassageiroAoTurnoInput input = new AdicionarPassageiroAoTurnoInput(passageiroSelecionado.getId(), turnoSelecionado.getId());
+                        adicionarPassageiroAoTurnoUseCase.execute(input);
+                        exibirInformacao("Sucesso", "Passageiro adicionado ao turno com sucesso!");
+                    });
         } catch (DomainException e) {
             exibirErro("Erro ao adicionar passageiro ao turno", e.getMessage());
         }
@@ -214,5 +228,13 @@ public class GerenciarPassageirosController implements Initializable {
 
     public void setVisualizarTurnosUseCase(VisualizarTurnosUseCase visualizarTurnosUseCase) {
         this.visualizarTurnosUseCase = visualizarTurnosUseCase;
+    }
+
+    public void setMoverPassageiroDeTurnoUseCase(MoverPassageiroDeTurnoUseCase moverPassageiroDeTurnoUseCase) {
+        this.moverPassageiroDeTurnoUseCase = moverPassageiroDeTurnoUseCase;
+    }
+
+    public void setTurnoRepository(TurnoRepository turnoRepository) {
+        this.turnoRepository = turnoRepository;
     }
 }

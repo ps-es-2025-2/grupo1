@@ -30,6 +30,7 @@ public class AdicionarPassageiroAoTurnoUseCase {
 
         // Adicionar passageiro (aplica regras de negócio)
         turno.adicionarPassageiro(input.getPassageiroId());
+        turno.confirmarParticipacao(input.getPassageiroId());
 
         // Persistir
         turnoRepository.salvar(turno);

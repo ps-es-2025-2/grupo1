@@ -73,6 +73,7 @@ public class DataInitializer {
         passageiroRepo.salvar(p4);
         passageiroRepo.salvar(p5);
         passageiroRepo.salvar(p6);
+        passageiroRepo.definirProximoId(7);
 
         // Associar passageiros aos turnos
         turnoManha.adicionarPassageiro(p1.getId());
