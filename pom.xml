@@ -13,8 +13,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <!--<javafx.version>17.0.2</javafx.version> downgrade se o 22 não funcionar no seu pc-->
-        <javafx.version>22</javafx.version>
+        <javafx.version>17.0.2</javafx.version>
+        <!--<javafx.version>22</javafx.version> se vc usa macos-->
     </properties>
 
     <dependencies>
