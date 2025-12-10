@@ -88,6 +88,8 @@ O projeto segue rigorosamente os princípios de **DDD**, com separação clara d
 | Maven      | 3.x    | [Apache Maven](https://maven.apache.org/download.cgi) |
 | JavaFX     | 17.0.2 | Incluído via Maven |
 
+obs: caso voçê use macos e veja erros na hora de rodar o JavaFX, mude a versão no pom.xml para 22
+
 ### Verificação de Instalação
 
 ```bash
